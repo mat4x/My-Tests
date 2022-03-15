@@ -1,26 +1,17 @@
-//Reader-Writer Problem  22/02/2022
+//Reader-Writer Problem                     22/02/2022
 #include <iostream>
 #include <conio.h>          //for getch()
 #include <unistd.h>         //for usleep
 #include <thread>           //for multi-threading
-#include <vector>
+#include <vector>           //for buffer
 using namespace std;
 
 
-/*
-writer takes single char input from user
-Reader reads if anything new
-
-press ` to exit
-*/
-
-
 int reader_count = 0,
-    mutex = 1, writer_sem = 1,                  //Binary semaphores
-    stop = 0, update = 0;
+    mutex = 1, writer_sem = 1,      //binary semaphores
+    stop = 0, update = 0;           //flags
 
 vector<char> buffer;
-
 
 bool semWait(int &n){
     if( n>0 ){
@@ -50,7 +41,7 @@ public:
 
     void start(){
         while(!stop){
-            /*Entry code*/
+                //entry conditions
             if( update > 0 && semWait(mutex) ){ //reader only reads if there are new updates in the buffer
                 update = 0;
                 reader_count++;
@@ -92,9 +83,9 @@ public:
                 inp = _getch();
                 if (inp == '`') stop = 1;
             }
-
+                //entry conditions
             else if( inp_flag && semWait(writer_sem) ){
-                this->write();                  //Critical section
+                this->write();                  //critical section
                 semSignal(writer_sem);
 
                 inp_flag = false;
@@ -107,13 +98,21 @@ public:
 
 
 int main(){
+    cout << " This program simulates the working of the reader writer problem\
+    \n Two readers R1 and R2 have been initiated as separate threads.\
+    \n Two writers W1 and W2 have been initiated as separate threads.\n\
+    \n The readers detect any input key presses and add the name to the bufffer\
+    \n The writers read the data only when the buffer has been updated by the readers\n\
+    \n If multiple inputs have been provided the readers and writers have to\
+    \n managed such that resource allocation is properly done.\
+    \n [Press ` key to exit program]\n\n";
+
     Reader r1("R1");
     Reader r2("R2");
 
     Writer w1("W1");
     Writer w2("W2");
 
-    //TESTING
     thread r1_thread( &Reader::start, r1 );
     thread r2_thread( &Reader::start, r2 );
 
@@ -126,6 +125,5 @@ int main(){
     w2_thread.join();
 
     cout << "Program terminated...\n";
-
     return 0;
 }

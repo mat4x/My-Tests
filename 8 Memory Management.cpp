@@ -1,11 +1,10 @@
-//Memory Management                         08/02/2022
+//Memory Management                         13/03/2022
 #include <iostream>
 #include <vector>
 using namespace std;
 
 
-class Partition{
-public:
+struct Partition{
     int number, par_size, free_size;
 
     Partition(int number, int par_size){
@@ -33,7 +32,7 @@ struct Process{
     }
 
     bool allocate(Partition &par){
-        /*method return true if process was allocated*/
+        //method return true if process was allocated
         if( par.free_size >= process_size ){
             par.allocate(this->process_size);
             this->partition_number = par.number;
@@ -42,8 +41,7 @@ struct Process{
     }
 
     void print(){
-        cout << " P" << number << '\t' << process_size << "KB"
-        << '\t';
+        cout << " P" << number << '\t' << process_size << "KB" << '\t';
         if( partition_number != 0 )
             cout << "  Partition " << partition_number << '\n';
         else
@@ -110,6 +108,10 @@ void best_fit(){
     vector<Partition> t_partitions = partitions;        //temporary copy of partitions
     vector<Process>   t_processes  = processes;         //temporary copy of processes
 
+    /*Iterate through all the processes.
+      For each process check which partition results to minimum internal fragmentation.
+      Assign the process the partition number and reduce free_size.
+      If the process was unallocated (flag=0), add it's size as external fragmentation.*/
     for( int pr=0; pr<pr_n; pr++ ){
         flag = 0, par_sel = -1;
         for( int pt=0; pt<par_n; pt++ ){
@@ -146,6 +148,9 @@ void worst_fit(){
     vector<Partition> t_partitions = partitions;        //temporary copy of partitions
     vector<Process>   t_processes  = processes;         //temporary copy of processes
 
+    /*Iterate through all the processes.
+      Assign the process the partition with the maximum free size.
+      If the process was unallocated (flag=0), add it's size as external fragmentation.*/
     for( int pr=0; pr<pr_n; pr++ ){
         flag = 0, par_sel = -1;
         for( int pt=0; pt<par_n; pt++ ){
@@ -155,11 +160,12 @@ void worst_fit(){
                     par_sel = pt;
                 else if( t_partitions[pt].free_size >= t_partitions[par_sel].free_size )
                     par_sel = pt;
-            }
-        }
+        }   }
+
         if( flag )
-            if( !t_processes[pr].allocate(t_partitions[par_sel]) )
-                ext_fragmenattion += t_processes[pr].process_size;
+            t_processes[pr].allocate(t_partitions[par_sel]);
+        else
+            ext_fragmenattion += t_processes[pr].process_size;
     }
 
     for( int pt=0; pt<par_n; pt++){
@@ -170,7 +176,7 @@ void worst_fit(){
     cout << "      [Worst Fit Algorithm]\n";
     print_processes( t_processes );
     cout << "\n Internal Fragmentation\t: " << int_fragmenattion << "KB\n";
-    cout << " External Fragmentation\t: " << ext_fragmenattion << "KB\n";
+    cout << " External Fragmentation\t: "   << ext_fragmenattion << "KB\n";
 }
 
 
