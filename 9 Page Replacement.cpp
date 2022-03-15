@@ -53,4 +53,6 @@ int main(){
 3
 10
 4 7 6 1 7 6 1 2 7 2
+
+https://www.gatevidyalay.com/page-replacement-algorithms-page-fault/
 */
