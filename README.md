@@ -8,4 +8,4 @@
 
 
 > CD PPT
->> https://drive.gooogle.com/drive/folders/1oD8xf6YJCQY83PGxqJPh_lwVif-mPeBg?usp=sharing
+>> https://drive.google.com/drive/folders/1oD8xf6YJCQY83PGxqJPh_lwVif-mPeBg?usp=sharing
