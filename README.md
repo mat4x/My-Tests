@@ -15,3 +15,6 @@
 
 > Verticals Marathon
 >> https://drive.google.com/drive/u/0/folders/1dVoQFE3_1y8fKHpxEeen7iYrf8ONXtuk
+
+> BS PPT
+>> https://docs.google.com/presentation/d/1sD4IxX2JmgJli48A7BtaJY76q9Zqfv2NUlPMqlrluLo
