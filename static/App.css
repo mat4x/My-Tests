@@ -1,0 +1,23 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+nav {
+  padding: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  width: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+nav > a {
+  margin: 40px;
+  padding: 0 25px;
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  background-color: gray;
+  border-radius: 3px;
+}
